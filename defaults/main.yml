@@ -1,0 +1,19 @@
+---
+# defaults file for lmod
+
+lmod_repo: https://github.com/TACC/Lmod.git
+lmod_version: 8.7.32
+lmod_prefix: /apps
+lmod_configure_options: --prefix={{ lmod_prefix }}
+
+lmod_required_packages:
+  - bc
+  - lua
+  - lua-bit32
+  - lua-devel
+  - lua-json
+  - lua-lpeg
+  - lua-posix
+  - lua-term
+  - tcl
+  - tcl-devel

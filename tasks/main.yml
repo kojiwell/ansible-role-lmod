@@ -1,0 +1,33 @@
+---
+# tasks file for lmod
+
+- name: install required packages
+  ansible.builtin.dnf:
+    name: "{{ lmod_required_packages }}"
+    state: present
+    enablerepo: powertools
+
+- name: git clone lmod
+  ansible.builtin.git:
+    repo: "{{ lmod_repo }}"
+    dest: /tmp/lmod
+    version: "{{ lmod_version }}"
+
+- name: install lmod
+  ansible.builtin.shell: |
+    ./configure {{ lmod_configure_options }}
+    make install
+  args:
+    chdir: /tmp/lmod
+    creates: "{{ lmod_prefix }}/lmod/{{ lmod_version }}"
+
+- name: add lmod in /etc/profile.d
+  ansible.builtin.file:
+    src: /apps/lmod/lmod/init/{{ item }}
+    dest: /etc/profile.d/z00_lmod.{{ item }}
+    state: link
+  with_items:
+    - bash
+    - sh
+    - csh
+    - zsh

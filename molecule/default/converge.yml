@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include kojiwell.lmod"
+      include_role:
+        name: "kojiwell.lmod"
